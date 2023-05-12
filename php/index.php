@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <?php include 'includes/head.inc.html'?>
+    <?php
+
+use function PHPSTORM_META\map;
+
+ include 'includes/head.inc.html'?>
 <body>
     <?php include 'includes/header.inc.html'?>
     <div class="container d-flex flex-column flex-md-row">
-        <div class="container d-flex flex-column mt-5">
-            <a class="btn border px-5" href="#">Home</a>
+        <div class="container d-flex flex-column mt-5 w-25">
+            <a class="btn border px-5" href="?page=ul">Home</a>
             <?php 
-                include 'includes/ul.php'
-            ?>
+             
+             $showbtn = true;
+             $page = isset($_GET['page']) ? $_GET['page'] : '';
+             
+              if($page == 'ul')
+              require 'includes/ul.php';
+             ?>
         </div>
-        <div class="container text-center mt-5">
-            <?php
-                $showbtn = true;
-                
-                if(isset($_GET['page'])){
-                    $page = $_GET['page'];
-                    $filename = 'includes/' . $page . '.php';
+        <div class="container mt-5 w-50">
+            <?php  
+                if($page == 'form'){
+                    $filename = 'includes/' . $page . '.html';
                     $showbtn = false;
                     if(file_exists($filename)){
                         include ($filename);
-                    }  
+                    }              
                 };
-                
                 if($showbtn){
-                    echo "<a class='btn border px-3 bg-primary text-light' href='?page=form'>Ajouter des données</a>";
+                    echo "<a class='btn border px-3 bg-primary text-light' href='?page=form' name='data'>Ajouter des données</a>";
                 }
                 ?>
         </div>

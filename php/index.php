@@ -8,7 +8,7 @@ use function PHPSTORM_META\map;
 <body>
     <?php include 'includes/header.inc.html'?>
     <div class="container d-flex flex-column flex-md-row">
-        <div class="container d-flex flex-column mt-5 w-25">
+        <div class="container d-flex flex-column mt-5 md-w-25">
             <a class="btn border px-5" href="?page=ul">Home</a>
             <?php 
              

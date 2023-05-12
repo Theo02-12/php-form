@@ -1,14 +1,15 @@
-<form>
+<h3 class="text-center">Ajouter des données</h3>
+<form method="get" class="position-relative">
     <div class="mb-3">
-      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prénom">
+      <input type="text" class="form-control py-3" id="exampleInputFname1" aria-describedby="emailHelp" placeholder="Prénom">
     </div>
     <div class="mb-3">
-      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Nom">
+      <input type="text" class="form-control py-3" id="exampleInputLname1" placeholder="Nom">
     </div>
     
     <div class="text-start mb-3">
         <label for="age">Age (18 à 70 ans)</label>
-        <input class ="form-control" type="number" placeholder="Renseignez votre âge" id="age">
+        <input class ="form-control " type="number" placeholder="Renseignez votre âge" id="age" min="18" max="70">
     </div>
     
 
@@ -32,5 +33,5 @@
             </label>
         </div>
     </div>
-    <input type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary mt-3 position-absolute end-0">Enregistrer les données</button>
   </form>

@@ -1,10 +1,11 @@
 <h3 class="text-center">Ajouter des données</h3>
+
 <form method="get" class="position-relative">
     <div class="mb-3">
-      <input type="text" class="form-control py-3" id="exampleInputFname1" aria-describedby="emailHelp" placeholder="Prénom">
+      <input type="text" class="form-control py-3" id="fname" aria-describedby="emailHelp" placeholder="Prénom">
     </div>
     <div class="mb-3">
-      <input type="text" class="form-control py-3" id="exampleInputLname1" placeholder="Nom">
+      <input type="text" class="form-control py-3" id="lname" placeholder="Nom">
     </div>
     
     <div class="text-start mb-3">
@@ -15,19 +16,19 @@
 
     <div class="input-group mb-3">
         <span class="input-group-text">Taille(1.26m à 3m)</span>
-        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" min="1.26" max="3" step="0.01">
+        <input type="number" class="form-control" min="1.26" max="3" step="0.01" id="size">
         <span class="input-group-text">m</span>
     </div>
 
     <div class="d-flex">
         <div class="form-check d-flex">
-            <input class="form-check-input me-3" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <input class="form-check-input me-3" type="radio" name="flexRadioDefault" id="femme">
             <label class="form-check-label" for="flexRadioDefault1">
                 Femme
             </label>
         </div>
         <div class="form-check d-flex">
-            <input class="form-check-input mx-3" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+            <input class="form-check-input mx-3" type="radio" name="flexRadioDefault" id="homme">
             <label class="form-check-label" for="flexRadioDefault2">
                 Homme
             </label>

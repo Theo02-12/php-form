@@ -1,38 +1,38 @@
 <h3 class="text-center">Ajouter des données</h3>
 
-<form method="get" class="position-relative">
+<form action="index.php" method="POST" class="position-relative">
     <div class="mb-3">
-      <input type="text" class="form-control py-3" id="fname" aria-describedby="emailHelp" placeholder="Prénom">
+      <input type="text" class="form-control py-3" id="fname" name="fname" aria-describedby="emailHelp" placeholder="Prénom">
     </div>
     <div class="mb-3">
-      <input type="text" class="form-control py-3" id="lname" placeholder="Nom">
+      <input type="text" class="form-control py-3" id="lname" name="lname" placeholder="Nom">
     </div>
     
     <div class="text-start mb-3">
         <label for="age">Age (18 à 70 ans)</label>
-        <input class ="form-control " type="number" placeholder="Renseignez votre âge" id="age" min="18" max="70">
+        <input class ="form-control " type="number" placeholder="Renseignez votre âge" id="age" min="18" max="70" name="age">
     </div>
     
 
     <div class="input-group mb-3">
         <span class="input-group-text">Taille(1.26m à 3m)</span>
-        <input type="number" class="form-control" min="1.26" max="3" step="0.01" id="size">
+        <input type="number" class="form-control" min="1.26" max="3" step="0.01" id="size" name="size">
         <span class="input-group-text">m</span>
     </div>
 
     <div class="d-flex">
         <div class="form-check d-flex">
-            <input class="form-check-input me-3" type="radio" name="flexRadioDefault" id="femme">
+            <input class="form-check-input me-3" type="radio" name="civility" value="femme">
             <label class="form-check-label" for="flexRadioDefault1">
                 Femme
             </label>
         </div>
         <div class="form-check d-flex">
-            <input class="form-check-input mx-3" type="radio" name="flexRadioDefault" id="homme">
+            <input class="form-check-input mx-3" type="radio" name="civility" value="homme">
             <label class="form-check-label" for="flexRadioDefault2">
                 Homme
             </label>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-3 position-absolute end-0">Enregistrer les données</button>
+    <button type="submit" class="btn btn-primary mt-3 position-absolute end-0" name="submit">Enregistrer les données</button>
   </form>

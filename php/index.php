@@ -1,40 +1,64 @@
-<?php 
-    session_start();
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <?php
-    use function PHPSTORM_META\map;
-    include 'includes/head.inc.html';
+
+use function PHPSTORM_META\map;
+
+include 'includes/head.inc.html';
 ?>
 
 <body>
     <?php include 'includes/header.inc.html' ?>
     <div class="container d-flex flex-column flex-md-row">
         <div class="col col-xl-3 d-flex flex-column mt-5">
-            <a class="btn border px-5" href="index.php?page=ul">Home</a>
+            <a class="btn border px-5" href="index.php">Home</a>
             <?php
 
-            $_SESSION["showbtn"] = true;
+            if (!empty($_SESSION)) {
+                include 'includes/ul.php';
+                $table = $_SESSION['table'];
+            }
+            $showbtn = true;
 
-            $page = isset($_GET['page']) ? $_GET['page'] : '';
-            
             ?>
         </div>
         <div class="container mt-5 w-md-50 w-sm-75">
             <?php
 
+            if (isset($_GET['add'])) {
+                $showbtn = false;
+                include 'includes/form.html';
+            }
+            elseif (isset($_POST['submit'])) {
+                $nom = $_POST['fname'];
+                $lname = $_POST['lname'];
+                $age = $_POST['age'];
+                $size = $_POST['size'];
+                $genre = $_POST['civility'];
+                
+                $table = array(
+                    "first_name" => $nom,
+                    "last_name" => $lname,
+                    "age" => $age,
+                    "size" => $size,
+                    "civility" => $genre,
+                );
+                $_SESSION['table'] = $table;
+            }
 
-            if ($page == 'form') {
-                $filename = 'includes/' . $page . '.html';
-                $_SESSION["showbtn"] = false;
-                if (file_exists($filename)) {
-                    include($filename);
-                }
-            };
+            if (isset($_GET['debugging'])) {
+                echo "<h2 class='text-center'>Débogage</h2>";
+                $debugTables = ($_SESSION['table']);
+                $showbtn = false;
+                echo "<pre>";
+                print_r($debugTables);
+            }
 
-            if ($_SESSION["showbtn"]) {
-                echo "<a class='btn border px-3 bg-primary text-light' href='?page=form' name='data'>Ajouter des données</a>";
+            if ($showbtn) {
+                echo "<a class='btn border px-3 bg-primary text-light' href='?add' name='data'>Ajouter des données</a>";
             }
 
 

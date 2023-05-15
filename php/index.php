@@ -48,13 +48,54 @@ include 'includes/head.inc.html';
                 );
                 $_SESSION['table'] = $table;
             }
-
-            if (isset($_GET['debugging'])) {
+            elseif (isset($_GET['debugging'])) {
                 echo "<h2 class='text-center'>Débogage</h2>";
+                echo "<h5 class='mt-5'>===> Lecture du tableau à l'aide de la fonction print_r()</h5>";
                 $debugTables = ($_SESSION['table']);
                 $showbtn = false;
                 echo "<pre>";
                 print_r($debugTables);
+            }
+            elseif (isset($_GET['concatenation'])) {
+                echo "<h2 class='text-center'>Concaténation</h2>";
+                $debugTables = ($_SESSION['table']);
+                $showbtn = false;
+                echo "<h5 class='mt-5'>===> Construction d'une phrase avec le contenu du tableau</h5>";
+                
+                function getGenre($debugTables){
+                    global $debugTables;
+                        if($debugTables['civility'] == 'homme'){
+                            echo "Mr" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "<br>";
+                        }elseif($debugTables['civility'] == 'femme'){
+                            echo "Mme" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "<br>";
+                        }
+                }
+                getGenre($debugTables);
+                
+                function infosMe(){
+                    global $debugTables;
+                    echo "J'ai " . $debugTables['age'] . " ans et je mesure " . $debugTables['size'] . "m"; 
+                }
+                infosMe();
+                    
+
+                echo "<h5 class='mt-5'>===> Construction d'une phrase après MAJ du tableau</h5>";
+                if($debugTables['civility'] == 'homme'){
+                    echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                }elseif($debugTables['civility'] == 'femme'){
+                    echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                }
+
+                infosMe();
+                
+                echo "<h5 class='mt-5'>===> Affichage d'une virgule à la place du point pour la taille</h5>";
+                if($debugTables['civility'] == 'homme'){
+                    echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                }elseif($debugTables['civility'] == 'femme'){
+                    echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                }
+
+                echo "J'ai " . $debugTables['age'] . " ans et je mesure " . str_replace('.', ',', $debugTables['size']) . "m";
             }
 
             if ($showbtn) {

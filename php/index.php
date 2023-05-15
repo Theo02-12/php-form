@@ -33,6 +33,8 @@ include 'includes/head.inc.html';
                 include 'includes/form.html';
             }
             elseif (isset($_POST['submit'])) {
+                echo "<p class='text-center bg-success py-3 text-light'>Données sauvegardées</p>";
+                $showbtn = false;
                 $nom = $_POST['fname'];
                 $lname = $_POST['lname'];
                 $age = $_POST['age'];
@@ -78,24 +80,35 @@ include 'includes/head.inc.html';
                 }
                 infosMe();
                     
-
-                echo "<h5 class='mt-5'>===> Construction d'une phrase après MAJ du tableau</h5>";
-                if($debugTables['civility'] == 'homme'){
-                    echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
-                }elseif($debugTables['civility'] == 'femme'){
-                    echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                function getMaj(){
+                    global $debugTables;
+                    if($debugTables['civility'] == 'homme'){
+                        echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                    }elseif($debugTables['civility'] == 'femme'){
+                        echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                    }
                 }
-
+                echo "<h5 class='mt-5'>===> Construction d'une phrase après MAJ du tableau</h5>";
+                getMaj();
                 infosMe();
                 
                 echo "<h5 class='mt-5'>===> Affichage d'une virgule à la place du point pour la taille</h5>";
-                if($debugTables['civility'] == 'homme'){
-                    echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
-                }elseif($debugTables['civility'] == 'femme'){
-                    echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
-                }
-
+                getMaj();
                 echo "J'ai " . $debugTables['age'] . " ans et je mesure " . str_replace('.', ',', $debugTables['size']) . "m";
+            }
+            elseif(isset($_GET['loop'])){
+                echo "<h2 class='text-center'>Boucle</h2><br><h5 class='mt-4'>===> Construction d'une phrase après MAJ du tableau</h5>";
+                $showbtn = false;
+                $debugTables = ($_SESSION['table']);
+                $keys = array_keys($debugTables);
+                $values = array();
+                $key = -1;
+                foreach($debugTables as $index => $data){
+                        $values[] = $data;
+                        $key++;
+                        echo "à la ligne n°" . $key .' correspond la clé "'. $index  . '" et contient "' . $data . '" <br>';
+                }
+                    
             }
 
             if ($showbtn) {

@@ -32,6 +32,10 @@ include 'includes/head.inc.html';
                 $showbtn = false;
                 include 'includes/form.html';
             }
+            elseif (isset($_GET['addmore'])) {
+                $showbtn = false;
+                include 'includes/form2.php';
+            }
             elseif (isset($_POST['submit'])) {
                 echo "<p class='text-center bg-success py-3 text-light'>Données sauvegardées</p>";
                 $showbtn = false;
@@ -96,25 +100,36 @@ include 'includes/head.inc.html';
                 getMaj();
                 echo "J'ai " . $debugTables['age'] . " ans et je mesure " . str_replace('.', ',', $debugTables['size']) . "m";
             }
-            elseif(isset($_GET['loop'])){
-                echo "<h2 class='text-center'>Boucle</h2><br><h5 class='mt-4'>===> Construction d'une phrase après MAJ du tableau</h5>";
-                $showbtn = false;
+            function readTable(){
+                global $debugTables;
                 $debugTables = ($_SESSION['table']);
-                $keys = array_keys($debugTables);
-                $values = array();
                 $key = -1;
                 foreach($debugTables as $index => $data){
                         $values[] = $data;
                         $key++;
                         echo "à la ligne n°" . $key .' correspond la clé "'. $index  . '" et contient "' . $data . '" <br>';
                 }
-                    
+            }
+            if(isset($_GET['loop'])){
+                echo "<h2 class='text-center'>Boucle</h2><br><h5 class='mt-4'>===> Construction d'une phrase après MAJ du tableau</h5>";
+                $showbtn = false;
+                readTable();   
+            }
+            elseif(isset($_GET['function'])){
+                echo "<h2 class='text-center'>Fonction</h2><br><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
+                $showbtn = false;
+                readTable();
+            }
+            elseif(isset($_GET['del'])){
+                echo "<p class='text-center bg-success py-3 text-light'>Données supprimées</p>";
+                $showbtn = false;
+                session_destroy();
             }
 
             if ($showbtn) {
                 echo "<a class='btn border px-3 bg-primary text-light' href='?add' name='data'>Ajouter des données</a>";
+                echo "<a class='btn border px-3 bg-secondary text-light' href='?addmore' name='data'>Ajouter plus de données</a>";
             }
-
 
             ?>
         </div>

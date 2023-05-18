@@ -29,10 +29,12 @@ include 'includes/head.inc.html';
             <?php
 
             if (isset($_GET['add'])) {
+                echo '<h3 class="text-center">Ajouter des données</h3>';
                 $showbtn = false;
                 include 'includes/form.html';
             }
             elseif (isset($_GET['addmore'])) {
+                echo '<h3 class="text-center">Ajouter plus de données</h3>';
                 $showbtn = false;
                 include 'includes/form2.php';
             }

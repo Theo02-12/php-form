@@ -1,9 +1,64 @@
+<form action="index.php" method="POST" class="position-relative pb-5">
+    <div class="row">
 
-<form action="index.php" method="POST" class="position-relative">
-<?php 
-    include 'includes/form.html'
-?>
-<div class="card col-md-4 mx-auto-my-1">
-    <input type="checkbox">
-</div>
-</form>
+        <div class="card col-md-7 mx-auto my-1 pt-1">
+            
+            <div class="mb-3">
+                <input type="text" class="form-control py-3" id="fname" name="fname" aria-describedby="emailHelp" placeholder="Prénom">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control py-3" id="lname" name="lname" placeholder="Nom">
+            </div>
+            
+            <div class="text-start mb-3">
+                <label for="age">Age (18 à 70 ans)</label>
+                <input class ="form-control " type="number" placeholder="Renseignez votre âge" id="age" min="18" max="70" name="age">
+            </div>
+            
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text">Taille(1.26m à 3m)</span>
+                <input type="number" class="form-control" min="1.26" max="3" step="0.01" id="size" name="size">
+                <span class="input-group-text">m</span>
+            </div>
+            
+            <div class="d-flex">
+                <div class="form-check d-flex">
+                    <input class="form-check-input me-3" type="radio" name="civility" value="femme">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Femme
+                    </label>
+                </div>
+                <div class="form-check d-flex">
+                    <input class="form-check-input mx-3" type="radio" name="civility" value="homme">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Homme
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card col-md-4 mx-auto my-1">
+            <p class="ps-3">Connaissances</p>
+            <label for="html"><input type="checkbox" name="html" id="html">HTML</label>
+            <label for="css"><input type="checkbox" name="html" id="css">CSS</label>
+            <label class="m-0 p-0"><input type="checkbox" name="html" id="javascript">JavaScript</label>
+            <label><input type="checkbox" name="html" id="php">PHP</label>
+            <label><input type="checkbox" name="html" id="html">MySQL</label>
+            <label><input type="checkbox" name="html" id="html">Bootstrap</label>
+            <label><input type="checkbox" name="html" id="html">Symfony</label>
+            <label><input type="checkbox" name="html" id="html">React</label>
+            
+            
+            <label for="color">Couleur préferée</label>
+            <input type="color" class="m-0 p-0 border border-3 border-secondary" id="color">
+            <label for="date">Date de naissance</label>
+            <input type="date" name="" id="date" class="border border-secondary mb-1">
+        </div>
+        <div class="card col-11 mx-auto my-3">
+            <label for="">Joindre une image (jpg ou png)</label>
+            <input type="file" class="mb-2">
+        </div>
+    </div>
+        <button type="submit" class="btn btn-primary mt-3 position-absolute end-0 bottom-0" name="submit">Enregistrer les données</button>
+    </form>

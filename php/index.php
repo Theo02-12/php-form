@@ -32,13 +32,11 @@ include 'includes/head.inc.html';
                 echo '<h3 class="text-center">Ajouter des données</h3>';
                 $showbtn = false;
                 include 'includes/form.html';
-            }
-            elseif (isset($_GET['addmore'])) {
+            } elseif (isset($_GET['addmore'])) {
                 echo '<h3 class="text-center">Ajouter plus de données</h3>';
                 $showbtn = false;
                 include 'includes/form2.php';
-            }
-            elseif (isset($_POST['submit'])) {
+            } elseif (isset($_POST['submit'])) {
                 echo "<p class='text-center bg-success py-3 text-light'>Données sauvegardées</p>";
                 $showbtn = false;
                 $nom = $_POST['fname'];
@@ -46,83 +44,98 @@ include 'includes/head.inc.html';
                 $age = $_POST['age'];
                 $size = $_POST['size'];
                 $genre = $_POST['civility'];
-                
+
                 $table = array(
                     "first_name" => $nom,
                     "last_name" => $lname,
                     "age" => $age,
                     "size" => $size,
                     "civility" => $genre,
+                    "html" => !empty($_POST['html']) ? $_POST['html'] : null,
+                    "css" => !empty($_POST['css']) ? $_POST['css'] : null,
+                    "javascript" => !empty($_POST['javascript']) ? $_POST['javascript'] : null,
+                    "php" => !empty($_POST['php']) ? $_POST['php'] : null,
+                    "mysql" => !empty($_POST['mysql']) ? $_POST['mysql'] : null,
+                    "bootstrap" => !empty($_POST['bootstrap']) ? $_POST['bootstrap'] : null,
+                    "symfony" => !empty($_POST['symfony']) ? $_POST['symfony'] : null,
+                    "react" => !empty($_POST['react']) ? $_POST['react'] : null,
+                    "color" => !empty($_POST['color']) ? $_POST['color'] : null,
+                    "dob" => !empty($_POST['date']) ? $_POST['date'] : null,
+                    "image" => !empty($_POST['image']) ? $_POST['image'] : null,
                 );
+
+
                 $_SESSION['table'] = $table;
-            }
-            elseif (isset($_GET['debugging'])) {
+            } elseif (isset($_GET['debugging'])) {
                 echo "<h2 class='text-center'>Débogage</h2>";
                 echo "<h5 class='mt-5'>===> Lecture du tableau à l'aide de la fonction print_r()</h5>";
                 $debugTables = ($_SESSION['table']);
+                $filterArray = array_filter($debugTables);
                 $showbtn = false;
                 echo "<pre>";
-                print_r($debugTables);
-            }
-            elseif (isset($_GET['concatenation'])) {
+                print_r($filterArray);
+            } elseif (isset($_GET['concatenation'])) {
                 echo "<h2 class='text-center'>Concaténation</h2>";
                 $debugTables = ($_SESSION['table']);
                 $showbtn = false;
                 echo "<h5 class='mt-5'>===> Construction d'une phrase avec le contenu du tableau</h5>";
-                
-                function getGenre($debugTables){
+
+                function getGenre($debugTables)
+                {
                     global $debugTables;
-                        if($debugTables['civility'] == 'homme'){
-                            echo "Mr" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "<br>";
-                        }elseif($debugTables['civility'] == 'femme'){
-                            echo "Mme" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "<br>";
-                        }
+                    if ($debugTables['civility'] == 'homme') {
+                        echo "Mr" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "<br>";
+                    } elseif ($debugTables['civility'] == 'femme') {
+                        echo "Mme" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "<br>";
+                    }
                 }
                 getGenre($debugTables);
-                
-                function infosMe(){
+
+                function infosMe()
+                {
                     global $debugTables;
-                    echo "J'ai " . $debugTables['age'] . " ans et je mesure " . $debugTables['size'] . "m"; 
+                    echo "J'ai " . $debugTables['age'] . " ans et je mesure " . $debugTables['size'] . "m";
                 }
                 infosMe();
-                    
-                function getMaj(){
+
+                function getMaj()
+                {
                     global $debugTables;
-                    if($debugTables['civility'] == 'homme'){
+                    if ($debugTables['civility'] == 'homme') {
                         echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
-                    }elseif($debugTables['civility'] == 'femme'){
+                    } elseif ($debugTables['civility'] == 'femme') {
                         echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
                     }
                 }
                 echo "<h5 class='mt-5'>===> Construction d'une phrase après MAJ du tableau</h5>";
                 getMaj();
                 infosMe();
-                
+
                 echo "<h5 class='mt-5'>===> Affichage d'une virgule à la place du point pour la taille</h5>";
                 getMaj();
                 echo "J'ai " . $debugTables['age'] . " ans et je mesure " . str_replace('.', ',', $debugTables['size']) . "m";
             }
-            function readTable(){
-                global $debugTables;
+            function readTable()
+            {
                 $debugTables = ($_SESSION['table']);
+                $debugFilter = array_filter($debugTables);
                 $key = -1;
-                foreach($debugTables as $index => $data){
-                        $values[] = $data;
-                        $key++;
-                        echo "à la ligne n°" . $key .' correspond la clé "'. $index  . '" et contient "' . $data . '" <br>';
+                foreach ($debugFilter as $index => $data) {
+                    $key++;
+                    if (!empty($index)) {
+                        echo "à la ligne n°" . $key . ' correspond la clé "' . $index  . '" et contient "' . $data . '" <br>';
+                    }
                 }
             }
-            if(isset($_GET['loop'])){
+            if (isset($_GET['loop'])) {
                 echo "<h2 class='text-center'>Boucle</h2><br><h5 class='mt-4'>===> Construction d'une phrase après MAJ du tableau</h5>";
                 $showbtn = false;
-                readTable();   
-            }
-            elseif(isset($_GET['function'])){
+                readTable();
+            } elseif (isset($_GET['function'])) {
                 echo "<h2 class='text-center'>Fonction</h2><br><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
                 $showbtn = false;
                 readTable();
-            }
-            elseif(isset($_GET['del'])){
+            } elseif (isset($_GET['del'])) {
                 echo "<p class='text-center bg-success py-3 text-light'>Données supprimées</p>";
                 $showbtn = false;
                 session_destroy();

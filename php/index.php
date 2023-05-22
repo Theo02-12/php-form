@@ -161,7 +161,9 @@ include 'includes/head.inc.html';
                 echo "<h2 class='text-center'>Fonction</h2><br><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
                 $showbtn = false;
                 readTable();
-                echo "<img src='uploaded/".$table['img']['name']. ".".$table['img']['type']."' alt='image' class='mw-100'>";
+                if(!isset($_FILES['image'])){
+                    echo "<img src='uploaded/".$table['img']['name']. ".".$table['img']['type']."' alt='image' class='mw-100'>";
+                }
                 
 
             } elseif (isset($_GET['del'])) {

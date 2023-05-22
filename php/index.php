@@ -36,14 +36,33 @@ include 'includes/head.inc.html';
                 echo '<h3 class="text-center">Ajouter plus de données</h3>';
                 $showbtn = false;
                 include 'includes/form2.php';
-            } elseif (isset($_POST['submit'])) {
-                echo "<p class='text-center bg-success py-3 text-light'>Données sauvegardées</p>";
+            } elseif (isset($_POST['submit']) || isset($_POST['postform'])) {
+                echo "<p class='text-center alert-success py-3'>Données sauvegardées</p>";
                 $showbtn = false;
                 $nom = $_POST['fname'];
                 $lname = $_POST['lname'];
                 $age = $_POST['age'];
                 $size = $_POST['size'];
                 $genre = $_POST['civility'];
+                
+                if(isset($_POST['postform'])){
+                    $filepath = 'uploaded/' . $_FILES['image']['name'];
+                    if(move_uploaded_file($_FILES['image']['tmp_name'], $filepath)){
+                        echo "<div class='alert alert-success text-center' role='alert'>
+                        Image sauvegadée!
+                      </div>";
+                    }else{
+                        echo "<div class='alert alert-danger text-center' role='alert'>
+                        Image non sauvegadée!
+                        </div>";
+                    }
+    
+                    $extension = pathinfo($filepath, PATHINFO_EXTENSION);
+                    $weight = filesize($filepath);
+                    $name = pathinfo($filepath, PATHINFO_FILENAME);
+                    $tmpname = $_FILES['image']['tmp_name'];
+                    $ingor = $_FILES['image']['error'];
+                }
 
                 $table = array(
                     "first_name" => $nom,
@@ -61,8 +80,15 @@ include 'includes/head.inc.html';
                     "react" => !empty($_POST['react']) ? $_POST['react'] : null,
                     "color" => !empty($_POST['color']) ? $_POST['color'] : null,
                     "dob" => !empty($_POST['date']) ? $_POST['date'] : null,
-                    "image" => !empty($_POST['image']) ? $_POST['image'] : null,
-                );
+                    "img" => isset($_POST['postform']) ? array(
+                        "name" => $name,
+                        "type" => $extension,
+                        "tmp_name" => $tmpname,
+                        "error" => $ingor,
+                        "size" => $weight,
+                    )
+
+                    : null);
 
 
                 $_SESSION['table'] = $table;
@@ -102,9 +128,9 @@ include 'includes/head.inc.html';
                 {
                     global $debugTables;
                     if ($debugTables['civility'] == 'homme') {
-                        echo "Mr" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                        echo "Mr" . " " .  ucfirst($debugTables['first_name']) . " " . strtoupper($debugTables['last_name']) . "<br>";
                     } elseif ($debugTables['civility'] == 'femme') {
-                        echo "Mme" . " " .  $debugTables['first_name'] . " " . strtoupper($debugTables['last_name']) . "<br>";
+                        echo "Mme" . " " .  ucfirst($debugTables['first_name']) . " " . strtoupper($debugTables['last_name']) . "<br>";
                     }
                 }
                 echo "<h5 class='mt-5'>===> Construction d'une phrase après MAJ du tableau</h5>";
@@ -123,7 +149,7 @@ include 'includes/head.inc.html';
                 foreach ($debugFilter as $index => $data) {
                     $key++;
                     if (!empty($index)) {
-                        echo "à la ligne n°" . $key . ' correspond la clé "' . $index  . '" et contient "' . $data . '" <br>';
+                        echo "<p>à la ligne n°" . $key . ' correspond la clé "' . $index  . '" et contient "' . $data . '" </p>';
                     }
                 }
             }
@@ -135,8 +161,11 @@ include 'includes/head.inc.html';
                 echo "<h2 class='text-center'>Fonction</h2><br><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
                 $showbtn = false;
                 readTable();
+                echo "<img src='uploaded/".$table['img']['name']. ".".$table['img']['type']."' alt='image' class='mw-100'>";
+                
+
             } elseif (isset($_GET['del'])) {
-                echo "<p class='text-center bg-success py-3 text-light'>Données supprimées</p>";
+                echo "<p class='text-center alert-success py-3'>Données supprimées</p>";
                 $showbtn = false;
                 session_destroy();
             }

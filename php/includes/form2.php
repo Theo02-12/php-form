@@ -1,4 +1,4 @@
-<form action="index.php" method="POST" class="position-relative pb-5">
+<form action="index.php" method="POST" class="position-relative pb-5" enctype="multipart/form-data">
     <div class="row">
 
         <div class="card col-md-7 mx-auto my-1 pt-1">
@@ -60,5 +60,5 @@
             <input type="file" class="mb-2" accept="image/*" name="image">
         </div>
     </div>
-        <button type="submit" class="btn btn-primary mt-3 position-absolute end-0 bottom-0" name="submit">Enregistrer les données</button>
+        <button type="submit" class="btn btn-primary mt-3 position-absolute end-0 bottom-0" name="postform">Enregistrer les données</button>
     </form>

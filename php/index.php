@@ -36,7 +36,7 @@ include 'includes/head.inc.html';
                 echo '<h3 class="text-center">Ajouter plus de données</h3>';
                 $showbtn = false;
                 include 'includes/form2.php';
-            } elseif (isset($_POST['submit']) || isset($_POST['postform'])) {
+            }elseif (isset($_POST['submit']) || isset($_POST['postform'])) {
                 echo "<p class='text-center alert-success py-3'>Données sauvegardées</p>";
                 $showbtn = false;
                 $nom = $_POST['fname'];
@@ -44,24 +44,24 @@ include 'includes/head.inc.html';
                 $age = $_POST['age'];
                 $size = $_POST['size'];
                 $genre = $_POST['civility'];
-                
-                if(isset($_POST['postform'])){
-                    $filepath = 'uploaded/' . $_FILES['image']['name'];
-                    if(move_uploaded_file($_FILES['image']['tmp_name'], $filepath)){
+
+                if (isset($_POST['postform'])) {
+                    $filepath = 'uploaded/' . basename($_FILES['fileImg']['name']);
+                    if (move_uploaded_file($_FILES['fileImg']['tmp_name'], $filepath)) {
                         echo "<div class='alert alert-success text-center' role='alert'>
                         Image sauvegadée!
                       </div>";
-                    }else{
+                    } else {
                         echo "<div class='alert alert-danger text-center' role='alert'>
                         Image non sauvegadée!
                         </div>";
                     }
-    
+
                     $extension = pathinfo($filepath, PATHINFO_EXTENSION);
                     $weight = filesize($filepath);
                     $name = pathinfo($filepath, PATHINFO_FILENAME);
-                    $tmpname = $_FILES['image']['tmp_name'];
-                    $ingor = $_FILES['image']['error'];
+                    $tmpname = $_FILES['fileImg']['tmp_name'];
+                    $ingor = $_FILES['fileImg']['error'];
                 }
 
                 $table = array(
@@ -88,7 +88,8 @@ include 'includes/head.inc.html';
                         "size" => $weight,
                     )
 
-                    : null);
+                        : null
+                );
 
 
                 $_SESSION['table'] = $table;
@@ -148,8 +149,11 @@ include 'includes/head.inc.html';
                 $key = -1;
                 foreach ($debugFilter as $index => $data) {
                     $key++;
-                    if (!empty($index)) {
-                        echo "<p>à la ligne n°" . $key . ' correspond la clé "' . $index  . '" et contient "' . $data . '" </p>';
+                    if ($index !== 'img') {
+                        echo "<p>à la ligne n°" . $key . ' correspond la clé "' . $index . '" et contient "' . $data . '"</p>';
+                    } else {
+                        echo "<p>à la ligne n°" . $key . ' correspond la clé "' . 'img'  . '" et contient</p>';
+                        echo "<img src='uploaded/" . $data['name'] . "." . $data['type'] . "' alt='image' class='mw-100'>";
                     }
                 }
             }
@@ -161,17 +165,11 @@ include 'includes/head.inc.html';
                 echo "<h2 class='text-center'>Fonction</h2><br><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
                 $showbtn = false;
                 readTable();
-                if(!isset($_FILES['image'])){
-                    echo "<img src='uploaded/".$table['img']['name']. ".".$table['img']['type']."' alt='image' class='mw-100'>";
-                }
-                
-
             } elseif (isset($_GET['del'])) {
                 echo "<p class='text-center alert-success py-3'>Données supprimées</p>";
                 $showbtn = false;
                 session_destroy();
             }
-
             if ($showbtn) {
                 echo "<a class='btn border px-3 bg-primary text-light' href='?add' name='data'>Ajouter des données</a>";
                 echo "<a class='btn border px-3 bg-secondary text-light' href='?addmore' name='data'>Ajouter plus de données</a>";

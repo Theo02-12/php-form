@@ -1,7 +1,7 @@
 <form action="index.php" method="POST" class="position-relative pb-5" enctype="multipart/form-data">
     <div class="row">
 
-        <div class="card col-md-7 mx-auto my-1 pt-1">
+        <div class="card col-md-7 mx-2 my-1 py-3">
             
             <div class="mb-3">
                 <input type="text" class="form-control py-3" id="fname" name="fname" aria-describedby="emailHelp" placeholder="Prénom">
@@ -11,8 +11,8 @@
             </div>
             
             <div class="text-start mb-3">
-                <label for="age">Age (18 à 70 ans)</label>
-                <input class ="form-control " type="number" placeholder="Renseignez votre âge" id="age" min="18" max="70" name="age">
+            <label for="age">Age (18 à 70 ans)</label>
+            <input class ="form-control " type="number" placeholder="Renseignez votre âge" id="age" min="18" max="70" name="age">
             </div>
             
             
@@ -38,7 +38,7 @@
             </div>
         </div>
         
-        <div class="card col-md-4 mx-auto my-1">
+        <div class="card col-md-4 mx-2 my-1 py-3">
             <p class="ps-3">Connaissances</p>
             <label for="html"><input type="checkbox" class="mx-1" name="html" value="HTML5">HTML</label>
             <label for="css"><input type="checkbox" class="mx-1" name="css" value="CSS3">CSS</label>
@@ -55,9 +55,9 @@
             <label for="date">Date de naissance</label>
             <input type="date" name="date" id="date" class="border border-secondary mb-1 w-50">
         </div>
-        <div class="card col-11 mx-auto my-3">
+        <div class="card col-11 mx-3 my-3">
             <label for="">Joindre une image (jpg ou png)</label>
-            <input type="file" class="mb-2" accept="image/*" name="image">
+            <input type="file" class="mb-2" accept="image/*" name="fileImg">
         </div>
     </div>
         <button type="submit" class="btn btn-primary mt-3 position-absolute end-0 bottom-0" name="postform">Enregistrer les données</button>

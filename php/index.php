@@ -166,6 +166,7 @@ include 'includes/head.inc.html';
             } elseif (isset($_GET['del'])) {
                 echo "<p class='text-center alert-success py-3'>Données supprimées</p>";
                 $showbtn = false;
+                unlink('uploaded/'.$_SESSION['table']['img']['name'].'.'.$_SESSION['table']['img']['type']);
                 session_destroy();
             }else{
                 

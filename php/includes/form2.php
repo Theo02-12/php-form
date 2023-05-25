@@ -53,7 +53,7 @@
             <label for="color">Couleur préferée</label>
             <input type="color" class="m-0 p-0 border border-3 border-secondary" id="color" name="color" value="<?php echo !empty($_SESSION['table']['color']) ? $_SESSION['table']['color'] : '' ?>">
             <label for="date">Date de naissance</label>
-            <input type="date" name="date" id="date" class="border border-secondary mb-1 w-50" value="<?php echo !empty($_SESSION['table']['date']) ? $_SESSION['table']['date'] : '' ?>">
+            <input type="date" name="date" id="date" class="border border-secondary mb-1 w-50" value="<?php echo !empty($_SESSION) ? $_SESSION['table']['dob'] : '' ?>">
         </div>
         <div class="card col-11 mx-3 my-3">
             <label for="">Joindre une image (jpg ou png)</label>

@@ -44,32 +44,31 @@ include 'includes/head.inc.html';
                 $size = $_POST['size'];
                 $genre = $_POST['civility'];
 
-                if (isset($_POST['postform'])) {
+                if (isset($_POST['postform']) || isset($_FILES['fileImg'])) {
                     $filepath = 'uploaded/' . basename($_FILES['fileImg']['name']);
 
-                    if (move_uploaded_file($_FILES['fileImg']['tmp_name'], $filepath)) {
-                        if ($_FILES['fileImg']['size'] > 2000000) {
-                            echo "<div class='alert alert-danger text-center' role='alert'>
+
+                    if ($_FILES['fileImg']['size'] > 2000000) {
+                        echo "<div class='alert alert-danger text-center' role='alert'>
                             La taille de l'image est trop grande!
                             </div>";
-                        }
-                        elseif($_FILES['fileImg']['type'] != "image/jpeg" && $_FILES['fileImg']['type'] != "image/png"){
-                            echo "<div class='alert alert-danger text-center' role='alert'>
-                            Mauvaise extension ". $_FILES['fileImg']['type'] ."!
+                    } elseif ($_FILES['fileImg']['type'] != "image/jpeg" && $_FILES['fileImg']['type'] != "image/png") {
+                        echo "<div class='alert alert-danger text-center' role='alert'>
+                            Mauvaise extension " . $_FILES['fileImg']['type'] . "!
                             </div>";
-                        }
-                        else{
-                            echo "<div class='alert alert-success text-center' role='alert'>
+                    }elseif(!isset($_FILES['fileImg'])){
+                        echo "<div class='alert alert-success text-center' role='alert'>
+                            Aucune Image sauvegadée!
+                          </div>";
+                    }
+                    else {
+                        move_uploaded_file($_FILES['fileImg']['tmp_name'], $filepath);
+                        echo "<div class='alert alert-success text-center' role='alert'>
                             Image sauvegadée!
                           </div>";
-                        }
-                    }else {
-                    
-                        echo "<div class='alert alert-danger text-center' role='alert'>
-                        Aucune image sauvegardée!
-                        </div>";
                     }
-                    
+
+
                     $extension = pathinfo($filepath, PATHINFO_EXTENSION);
                     $weight = filesize($filepath);
                     $name = pathinfo($filepath, PATHINFO_FILENAME);
@@ -77,7 +76,7 @@ include 'includes/head.inc.html';
                     $ingor = $_FILES['fileImg']['error'];
                 }
 
-                    $table = array(
+                $table = array(
                     "first_name" => $nom,
                     "last_name" => $lname,
                     "age" => $age,
@@ -106,7 +105,7 @@ include 'includes/head.inc.html';
 
 
                 $_SESSION['table'] = $table;
-            } elseif (isset($_GET['debugging'])) {
+            } elseif (!empty($_SESSION['table']) ? isset($_GET['debugging']) : null) {
                 echo "<h2 class='text-center'>Débogage</h2>";
                 echo "<h5 class='mt-5'>===> Lecture du tableau à l'aide de la fonction print_r()</h5>";
                 $debugTables = ($_SESSION['table']);
@@ -114,7 +113,7 @@ include 'includes/head.inc.html';
                 $showbtn = false;
                 echo "<pre>";
                 print_r($filterArray);
-            } elseif (isset($_GET['concatenation'])) {
+            } elseif (!empty($_SESSION['table']) ? isset($_GET['concatenation']) : null) {
                 echo "<h2 class='text-center'>Concaténation</h2>";
                 $debugTables = ($_SESSION['table']);
                 $showbtn = false;
@@ -154,22 +153,22 @@ include 'includes/head.inc.html';
                 title("Affichage d'une virgule à la place du point pour la taille");
                 getMaj();
                 echo "<p>J'ai " . $debugTables['age'] . " ans et je mesure " . str_replace('.', ',', $debugTables['size']) . "m</p>";
-            }
-            elseif (isset($_GET['loop'])) {
+            } elseif (!empty($_SESSION['table']) ? isset($_GET['loop']) : null) {
                 echo "<h2 class='text-center'>Boucle</h2><h5 class='mt-4'>===> Construction d'une phrase après MAJ du tableau</h5>";
                 $showbtn = false;
                 readTable();
-            } elseif (isset($_GET['function'])) {
+            } elseif (!empty($_SESSION['table']) ? isset($_GET['function']) : null) {
                 echo "<h2 class='text-center'>Fonction</h2><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
                 $showbtn = false;
                 readTable();
             } elseif (isset($_GET['del'])) {
                 echo "<p class='text-center alert-success py-3'>Données supprimées</p>";
                 $showbtn = false;
-                unlink('uploaded/'.$_SESSION['table']['img']['name'].'.'.$_SESSION['table']['img']['type']);
+                if(isset($_SESSION['table']['img'])){
+                    file_exists('uploaded/' . $_SESSION['table']['img']['name'] . '.' . $_SESSION['table']['img']['type']) ? unlink('uploaded/' . $_SESSION['table']['img']['name'] . '.' . $_SESSION['table']['img']['type']) : false;
+                }
                 session_destroy();
-            }else{
-                
+            } else {
             }
             function readTable()
             {

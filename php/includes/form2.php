@@ -57,7 +57,7 @@
         </div>
         <div class="card col-11 mx-3 my-3">
             <label for="">Joindre une image (jpg ou png)</label>
-            <input type="file" class="mb-2" accept="image/*" name="fileImg">
+            <input type="file" class="mb-2" name="fileImg" accept="image/*">
         </div>
     </div>
         <button type="submit" class="btn btn-primary mt-3 position-absolute end-0 bottom-0" name="postform">Enregistrer les données</button>

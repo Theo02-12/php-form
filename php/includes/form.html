@@ -3,10 +3,10 @@
     
     <div class="card col-md-7 mx-auto my-1 border-0">
         <div class="mb-3">
-            <input type="text" class="form-control py-3" id="fname" name="fname" aria-describedby="emailHelp" placeholder="Prénom">
+            <input type="text" class="form-control py-3" id="fname" name="fname" aria-describedby="emailHelp" placeholder="Prénom" required>
         </div>
         <div class="mb-3">
-            <input type="text" class="form-control py-3" id="lname" name="lname" placeholder="Nom">
+            <input type="text" class="form-control py-3" id="lname" name="lname" placeholder="Nom" required>
         </div>
         
         <div class="text-start mb-3">
@@ -23,13 +23,13 @@
         
         <div class="d-flex">
             <div class="form-check d-flex">
-                <input class="form-check-input me-3" type="radio" name="civility" value="femme">
+                <input class="form-check-input me-3" type="radio" name="civility" value="femme" required>
                 <label class="form-check-label" for="flexRadioDefault1">
                     Femme
                 </label>
             </div>
             <div class="form-check d-flex">
-                <input class="form-check-input mx-3" type="radio" name="civility" value="homme">
+                <input class="form-check-input mx-3" type="radio" name="civility" value="homme" required>
                 <label class="form-check-label" for="flexRadioDefault2">
                     Homme
                 </label>

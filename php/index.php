@@ -31,7 +31,7 @@ include 'includes/head.inc.html';
                 echo '<h3 class="text-center">Ajouter des données</h3>';
                 $showbtn = false;
                 include 'includes/form.html';
-            } elseif (isset($_GET['addmore'])) {
+            } elseif (isset($_GET['addmore'])){
                 echo '<h3 class="text-center">Ajouter plus de données</h3>';
                 $showbtn = false;
                 include 'includes/form2.php';
@@ -45,6 +45,7 @@ include 'includes/head.inc.html';
                 $genre = $_POST['civility'];
 
                 if (isset($_POST['postform']) || isset($_FILES['fileImg'])) {
+
                     $filepath = 'uploaded/' . basename($_FILES['fileImg']['name']);
 
 
@@ -77,8 +78,8 @@ include 'includes/head.inc.html';
                 }
 
                 $table = array(
-                    "first_name" => $nom,
-                    "last_name" => $lname,
+                    "first_name" => htmlspecialchars($nom),
+                    "last_name" => htmlspecialchars($lname),
                     "age" => $age,
                     "size" => $size,
                     "civility" => $genre,

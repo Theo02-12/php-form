@@ -17,8 +17,9 @@ include 'includes/head.inc.html';
             <a class="btn border px-5" href="index.php">Home</a>
             <?php
 
-            if (!empty($_SESSION)) {
+            if(!empty($_SESSION)) {
                 include 'includes/ul.php';
+                $table = $_SESSION['table'];
             }
             $showbtn = true;
 
@@ -104,19 +105,16 @@ include 'includes/head.inc.html';
                         : null
                 );
 
-
                 $_SESSION['table'] = $table;
-            } elseif (!empty($_SESSION['table']) ? isset($_GET['debugging']) : null) {
+            } elseif (!empty($table) ? isset($_GET['debugging']) : null) {
                 echo "<h2 class='text-center'>Débogage</h2>";
                 echo "<h5 class='mt-5'>===> Lecture du tableau à l'aide de la fonction print_r()</h5>";
-                $debugTables = ($_SESSION['table']);
-                $filterArray = array_filter($debugTables);
+                $filterArray = array_filter($table);
                 $showbtn = false;
                 echo "<pre>";
                 print_r($filterArray);
-            } elseif (!empty($_SESSION['table']) ? isset($_GET['concatenation']) : null) {
+            } elseif (!empty($table) ? isset($_GET['concatenation']) : null) {
                 echo "<h2 class='text-center'>Concaténation</h2>";
-                $debugTables = ($_SESSION['table']);
                 $showbtn = false;
 
                 function title($myTitle)
@@ -125,26 +123,26 @@ include 'includes/head.inc.html';
                 }
                 title("Construction d'une phrase avec le contenu du tableau");
 
-                if ($_SESSION['table']['civility'] == 'homme') {
-                    echo "<p>Mr" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "</p>";
-                } elseif ($debugTables['civility'] == 'femme') {
-                    echo "<p>Mme" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "</p>";
+                if ($table['civility'] == 'homme') {
+                    echo "<p>Mr" . " " .  $table['first_name'] . " " . $table['last_name'] . "</p>";
+                } elseif ($table['civility'] == 'femme') {
+                    echo "<p>Mme" . " " .  $table['first_name'] . " " . $table['last_name'] . "</p>";
                 }
 
                 function infosMe()
                 {
-                    global $debugTables;
-                    echo "<p>J'ai " . $debugTables['age'] . " ans et je mesure " . $debugTables['size'] . "m</p>";
+                    global $table;
+                    echo "<p>J'ai " . $table['age'] . " ans et je mesure " . $table['size'] . "m</p>";
                 }
                 infosMe();
 
                 function getMaj()
                 {
-                    global $debugTables;
-                    if ($debugTables['civility'] == 'homme') {
-                        echo "<p>Mr" . " " .  ucfirst($debugTables['first_name']) . " " . strtoupper($debugTables['last_name']) . "</p>";
-                    } elseif ($debugTables['civility'] == 'femme') {
-                        echo "<p>Mme" . " " .  ucfirst($debugTables['first_name']) . " " . strtoupper($debugTables['last_name']) . "</p>";
+                    global $table;
+                    if ($table['civility'] == 'homme') {
+                        echo "<p>Mr" . " " .  ucfirst($table['first_name']) . " " . strtoupper($table['last_name']) . "</p>";
+                    } elseif ($table['civility'] == 'femme') {
+                        echo "<p>Mme" . " " .  ucfirst($table['first_name']) . " " . strtoupper($table['last_name']) . "</p>";
                     }
                 }
                 title("Construction d'une phrase après MAJ du tableau");
@@ -153,19 +151,27 @@ include 'includes/head.inc.html';
 
                 title("Affichage d'une virgule à la place du point pour la taille");
                 getMaj();
-                echo "<p>J'ai " . $debugTables['age'] . " ans et je mesure " . str_replace('.', ',', $debugTables['size']) . "m</p>";
-            } elseif (!empty($_SESSION['table']) ? isset($_GET['loop']) : null) {
+                echo "<p>J'ai " . $table['age'] . " ans et je mesure " . str_replace('.', ',', $table['size']) . "m</p>";
+            } elseif (!empty($table) ? isset($_GET['loop']) : null) {
                 echo "<h2 class='text-center'>Boucle</h2><h5 class='mt-4'>===> Construction d'une phrase après MAJ du tableau</h5>";
                 $showbtn = false;
-                readTable();
-            } elseif (!empty($_SESSION['table']) ? isset($_GET['function']) : null) {
+                $key = 0;
+                foreach (array_filter($table) as $index => $data) {
+                    $key++;
+                    if ($index !== 'img') {
+                        echo "<p>à la ligne n°" . $key . ' correspond la clé "' . $index . '" et contient "' . $data . '"</p>';
+                    } else {
+                        null;
+                    }
+                }
+            } elseif (!empty($table) ? isset($_GET['function']) : null) {
                 echo "<h2 class='text-center'>Fonction</h2><h5 class='mt-4'>===> J'utilise ma fonction readTable()</h5>";
                 $showbtn = false;
                 readTable();
             } elseif (isset($_GET['del'])) {
                 echo "<p class='text-center alert-success py-3'>Données supprimées</p>";
                 $showbtn = false;
-                if(isset($_SESSION['table']['img'])){
+                if(isset($table['img'])){
                     file_exists('uploaded/' . $_SESSION['table']['img']['name'] . '.' . $_SESSION['table']['img']['type']) ? unlink('uploaded/' . $_SESSION['table']['img']['name'] . '.' . $_SESSION['table']['img']['type']) : false;
                 }
                 session_destroy();
@@ -175,7 +181,7 @@ include 'includes/head.inc.html';
             {
                 $debugTables = ($_SESSION['table']);
                 $debugFilter = array_filter($debugTables);
-                $key = -1;
+                $key = 0;
                 foreach ($debugFilter as $index => $data) {
                     $key++;
                     if ($index !== 'img') {

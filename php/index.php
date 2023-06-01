@@ -125,7 +125,7 @@ include 'includes/head.inc.html';
                 }
                 title("Construction d'une phrase avec le contenu du tableau");
 
-                if ($debugTables['civility'] == 'homme') {
+                if ($_SESSION['table']['civility'] == 'homme') {
                     echo "<p>Mr" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "</p>";
                 } elseif ($debugTables['civility'] == 'femme') {
                     echo "<p>Mme" . " " .  $debugTables['first_name'] . " " . $debugTables['last_name'] . "</p>";
